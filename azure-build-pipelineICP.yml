@@ -3,7 +3,8 @@ pool: 'localmac'
 
 
 variables:
-  registryServerName: '$(registryName).azurecr.io'
+  #registryServerName: '$(registryName).azurecr.io'
+  registryServerName: '$(registryName)'
   imageName: '$(projectName)'
   # define 4 more variables: projectName, registryName, registryLogin and registryPassword in the build pipeline in UI
 
@@ -12,12 +13,15 @@ steps:
 - bash: docker build -f $(system.defaultWorkingDirectory)/$(projectName)/Dockerfile -t $(registryServerName)/$(imageName):$(build.buildId) -t $(registryServerName)/$(imageName):latest $(system.defaultWorkingDirectory)/$(projectName)
   displayName: 'docker build'
 
-- bash: docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
+#- bash: docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
+- bash: docker login  -u $(registryLogin) -p $(registryPassword)
   displayName: 'docker login'
 
 - bash: |
-    docker push $(registryServerName)/$(imageName):$(build.buildId)
-    docker push $(registryServerName)/$(imageName):latest
+    #docker push $(registryServerName)/$(imageName):$(build.buildId)
+    #docker push $(registryServerName)/$(imageName):latest
+    docker push $(registryLogin)/$(imageName):$(build.buildId)
+    docker push $(registryLogin)/$(imageName):latest
   displayName: 'docker push'
 #  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
 
