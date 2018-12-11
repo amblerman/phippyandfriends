@@ -19,7 +19,7 @@ steps:
     docker push $(registryServerName)/$(imageName):$(build.buildId)
     docker push $(registryServerName)/$(imageName):latest
   displayName: 'docker push'
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+#  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
 
 - #task: HelmInstaller@0
   #displayName: 'Install Helm 2.11.0'
