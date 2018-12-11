@@ -21,9 +21,9 @@ steps:
   displayName: 'docker push'
 #  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
 
-- #task: HelmInstaller@0
-  #displayName: 'Install Helm 2.11.0'
-  #inputs:
+#-  task: HelmInstaller@0
+  # displayName: 'Install Helm 2.11.0'
+  # inputs:
   #  helmVersion: 2.11.0
 
 - bash: helm init --client-only --wait
@@ -32,6 +32,6 @@ steps:
 - bash: helm package --version $(build.buildId) --destination $(build.artifactStagingDirectory) $(system.defaultWorkingDirectory)/$(projectName)/charts/$(projectName)
   displayName: 'helm package'
 
-- #bash: az acr helm push -n $(registryName) -u $(registryLogin) -p $(registryPassword) $(build.artifactStagingDirectory)/$(projectName)-$(build.buildId).tgz
+#- bash: az acr helm push -n $(registryName) -u $(registryLogin) -p $(registryPassword) $(build.artifactStagingDirectory)/$(projectName)-$(build.buildId).tgz
   #displayName: 'az acr helm push'
   #condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
